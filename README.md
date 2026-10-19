@@ -122,6 +122,3 @@ Please report security problems privately; see [docs/SECURITY.md](docs/SECURITY.
 ## License
 
 Rednif is released under the [MIT License](LICENSE).
-
-Rednif began as a fork of [Shuffle](https://github.com/WizenPainter/shuffle) by
-Jaime Guzman, and keeps the original copyright notice as the MIT License requires.
