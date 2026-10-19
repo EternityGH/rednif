@@ -626,11 +626,13 @@ fn apply_icon_bg(bg: IconBg, cx: &mut App) {
     cx.refresh_windows();
 }
 
-/// Recolor the base icon per `bg` and hand it to the Dock. `Default` leaves the
-/// bundle's own icon untouched.
+/// Recolor the base icon per `bg` and hand it to the Dock. `Default` sends the
+/// transparent base icon as-is: macOS 26 puts a bundle's static icon on a gray
+/// rounded plate, but an icon set at runtime is drawn untouched.
 fn refresh_dock_icon(bg: &IconBg) {
     if matches!(bg, IconBg::Default) {
-        return; // keep the built-in AppIcon.icns
+        set_dock_icon(ICON_BASE_PNG);
+        return;
     }
     if let Some(png) = compose_icon_png(bg) {
         set_dock_icon(&png);
@@ -12002,6 +12004,15 @@ impl Rednif {
                         }
                         continue;
                     }
+                    if let Some(key) = thumb_key(&path) {
+                        if jobs.len() < 400
+                            && !cache.contains_key(&key)
+                            && self.cloud_state(&path, false) == CloudSync::Local
+                            && seen.insert(key.clone())
+                        {
+                            jobs.push((key, path.clone()));
+                        }
+                    }
                     if let Some(key) = icon_key(&path) {
                         // Skip types we've already built or already queued.
                         if cache.contains_key(&key) || !seen.insert(key.clone()) {
@@ -12024,7 +12035,9 @@ impl Rednif {
             for (key, path) in jobs {
                 // An active icon pack overrides the macOS icon. Pack images are
                 // read + decoded entirely off the main thread.
-                let built = if let Some(pack_file) = pack_icon_path(&key) {
+                let built = if key.starts_with("thumb:") {
+                    cx.background_spawn(async move { decode_thumb(&path) }).await
+                } else if let Some(pack_file) = pack_icon_path(&key) {
                     cx.background_spawn(async move { decode_image_file(&pack_file) })
                         .await
                 } else {
@@ -12210,15 +12223,15 @@ impl Rednif {
     ) -> AnyElement {
         let t = theme();
         let is_col = self.collapsed_sections.contains(title);
-        let arrow = if is_col { "▸" } else { "▾" };
         let title_owned = title.to_string();
         let mut row = div()
             .flex()
             .items_center()
             .justify_between()
-            .px_3()
-            .pt_4()
-            .pb_1()
+            .pl_4()
+            .pr_3()
+            .pt(px(18.0))
+            .pb(px(4.0))
             .child(
                 div()
                     .id(SharedString::from(format!("sec-{title}")))
@@ -12226,11 +12239,16 @@ impl Rednif {
                     .items_center()
                     .gap_1()
                     .cursor_pointer()
-                    .text_xs()
+                    .text_size(px(11.0))
+                    .font_weight(FontWeight::SEMIBOLD)
                     .text_color(rgb(t.text_dim))
                     .hover(|s| s.text_color(rgb(t.text)))
-                    .child(div().w(px(10.0)).child(arrow.to_string()))
                     .child(title.to_string())
+                    .child(line_icon(
+                        if is_col { "chevron-right" } else { "chevron-down" },
+                        10.0,
+                        Theme::alpha_hex(t.text_dim, 0xb0),
+                    ))
                     .on_click(cx.listener(move |this, _: &ClickEvent, _, cx| {
                         this.toggle_section(title_owned.clone(), cx);
                     })),
@@ -12531,148 +12549,6 @@ impl Rednif {
             }
         }
 
-        // --- Bookmarks (with a "+" to pin the current folder) ---
-        let show_bookmarks = if collapsed {
-            push_divider(&mut items);
-            items.push(
-                div()
-                    .id("add-bookmark")
-                    .flex()
-                    .items_center()
-                    .justify_center()
-                    .mx_1()
-                    .py_1()
-                    .rounded_md()
-                    .cursor_pointer()
-                    .text_color(rgb(theme().text_dim))
-                    .hover(|s| s.bg(rgb(theme().hover)).text_color(rgb(theme().text)))
-                    .child("+")
-                    .tooltip(tip("Pin current folder"))
-                    .on_click(cx.listener(|this, _: &ClickEvent, _, cx| {
-                        this.add_bookmark(cx);
-                    }))
-                    .into_any_element(),
-            );
-            true
-        } else {
-            let plus = div()
-                .id("add-bookmark")
-                .cursor_pointer()
-                .px_1()
-                .text_color(rgb(theme().text_dim))
-                .hover(|s| s.text_color(rgb(theme().text)))
-                .child("+")
-                .tooltip(tip("Pin current folder"))
-                .on_click(cx.listener(|this, _: &ClickEvent, _, cx| {
-                    this.add_bookmark(cx);
-                }))
-                .into_any_element();
-            items.push(self.section_header_el("Bookmarks", Some(plus), cx));
-            !self.collapsed_sections.contains("Bookmarks")
-        };
-        if show_bookmarks {
-            if self.bookmarks.is_empty() {
-                if !collapsed {
-                    items.push(empty_hint("Click + to pin a folder").into_any_element());
-                }
-            } else {
-                for p in &self.bookmarks {
-                    push_bookmark_nav(&mut items, cx, &mut key, p.clone(), current, collapsed);
-                }
-            }
-        }
-
-        // --- Groups (user-defined; only when the feature is enabled) ---
-        if prefs().groups_enabled {
-            for (gidx, g) in self.groups.iter().enumerate() {
-                if collapsed {
-                    push_divider(&mut items);
-                    for p in &g.paths {
-                        push_group_member(&mut items, cx, &mut key, gidx, p.clone(), current, true);
-                    }
-                    continue;
-                }
-                let ckey = format!("group:{}", g.name);
-                let is_col = self.collapsed_sections.contains(&ckey);
-                let arrow = if is_col { "▸" } else { "▾" };
-                let toggle_key = ckey.clone();
-                items.push(
-                    div()
-                        .flex()
-                        .items_center()
-                        .justify_between()
-                        .px_3()
-                        .pt_4()
-                        .pb_1()
-                        .child(
-                            div()
-                                .id(SharedString::from(format!("grp-{gidx}")))
-                                .flex()
-                                .items_center()
-                                .gap_1()
-                                .cursor_pointer()
-                                .text_xs()
-                                .text_color(rgb(theme().text_dim))
-                                .hover(|s| s.text_color(rgb(theme().text)))
-                                .child(div().w(px(10.0)).child(arrow.to_string()))
-                                .child(g.name.clone())
-                                .on_click(cx.listener(move |this, _: &ClickEvent, _, cx| {
-                                    this.toggle_section(toggle_key.clone(), cx);
-                                }))
-                                .on_mouse_down(
-                                    MouseButton::Right,
-                                    cx.listener(move |this, ev: &MouseDownEvent, _, cx| {
-                                        let (x, y) = (
-                                            f64::from(ev.position.x) as f32,
-                                            f64::from(ev.position.y) as f32,
-                                        );
-                                        this.open_sidebar_menu(
-                                            x,
-                                            y,
-                                            SidebarTarget::GroupHeader(gidx),
-                                            cx,
-                                        );
-                                        cx.stop_propagation();
-                                    }),
-                                ),
-                        )
-                        .into_any_element(),
-                );
-                if !is_col {
-                    if g.paths.is_empty() {
-                        items.push(empty_hint("Right-click a file to add it").into_any_element());
-                    } else {
-                        for p in &g.paths {
-                            push_group_member(&mut items, cx, &mut key, gidx, p.clone(), current, false);
-                        }
-                    }
-                }
-            }
-        }
-
-        // --- Recents (count is user-configurable; 0 hides the section) ---
-        let recent_limit = prefs().recent_limit;
-        if recent_limit > 0 && self.begin_section(&mut items, "Recents", collapsed, cx) {
-            if self.recents.is_empty() {
-                if !collapsed {
-                    items.push(empty_hint("No recent folders").into_any_element());
-                }
-            } else {
-                for p in self.recents.iter().take(recent_limit) {
-                    push_nav(
-                        &mut items,
-                        cx,
-                        &mut key,
-                        path_label(p),
-                        "svg:clock".to_string(),
-                        p.clone(),
-                        current,
-                        collapsed,
-                    );
-                }
-            }
-        }
-
         // --- Locations (iCloud & cloud drives, home, volumes, AirDrop, Network, Trash) ---
         let (cloud, volumes) = sidebar_locations();
         if self.begin_section(&mut items, "Locations", collapsed, cx) {
@@ -12810,6 +12686,152 @@ impl Rednif {
                     }))
                     .into_any_element(),
             );
+        }
+
+        // --- Bookmarks (with a "+" to pin the current folder) ---
+        let show_bookmarks = if collapsed {
+            push_divider(&mut items);
+            items.push(
+                div()
+                    .id("add-bookmark")
+                    .flex()
+                    .items_center()
+                    .justify_center()
+                    .mx_1()
+                    .py_1()
+                    .rounded_md()
+                    .cursor_pointer()
+                    .text_color(rgb(theme().text_dim))
+                    .hover(|s| s.bg(rgb(theme().hover)).text_color(rgb(theme().text)))
+                    .child("+")
+                    .tooltip(tip("Pin current folder"))
+                    .on_click(cx.listener(|this, _: &ClickEvent, _, cx| {
+                        this.add_bookmark(cx);
+                    }))
+                    .into_any_element(),
+            );
+            true
+        } else {
+            let plus = div()
+                .id("add-bookmark")
+                .cursor_pointer()
+                .w(px(20.0))
+                .h(px(20.0))
+                .flex()
+                .items_center()
+                .justify_center()
+                .rounded_md()
+                .hover(|s| s.bg(rgb(theme().hover)))
+                .child(line_icon("plus", 13.0, theme().text_dim))
+                .tooltip(tip("Pin current folder"))
+                .on_click(cx.listener(|this, _: &ClickEvent, _, cx| {
+                    this.add_bookmark(cx);
+                }))
+                .into_any_element();
+            items.push(self.section_header_el("Bookmarks", Some(plus), cx));
+            !self.collapsed_sections.contains("Bookmarks")
+        };
+        if show_bookmarks {
+            if self.bookmarks.is_empty() {
+                if !collapsed {
+                    items.push(empty_hint("Click + to pin a folder").into_any_element());
+                }
+            } else {
+                for p in &self.bookmarks {
+                    push_bookmark_nav(&mut items, cx, &mut key, p.clone(), current, collapsed);
+                }
+            }
+        }
+
+        // --- Groups (user-defined; only when the feature is enabled) ---
+        if prefs().groups_enabled {
+            for (gidx, g) in self.groups.iter().enumerate() {
+                if collapsed {
+                    push_divider(&mut items);
+                    for p in &g.paths {
+                        push_group_member(&mut items, cx, &mut key, gidx, p.clone(), current, true);
+                    }
+                    continue;
+                }
+                let ckey = format!("group:{}", g.name);
+                let is_col = self.collapsed_sections.contains(&ckey);
+                let arrow = if is_col { "▸" } else { "▾" };
+                let toggle_key = ckey.clone();
+                items.push(
+                    div()
+                        .flex()
+                        .items_center()
+                        .justify_between()
+                        .px_3()
+                        .pt_4()
+                        .pb_1()
+                        .child(
+                            div()
+                                .id(SharedString::from(format!("grp-{gidx}")))
+                                .flex()
+                                .items_center()
+                                .gap_1()
+                                .cursor_pointer()
+                                .text_xs()
+                                .text_color(rgb(theme().text_dim))
+                                .hover(|s| s.text_color(rgb(theme().text)))
+                                .child(div().w(px(10.0)).child(arrow.to_string()))
+                                .child(g.name.clone())
+                                .on_click(cx.listener(move |this, _: &ClickEvent, _, cx| {
+                                    this.toggle_section(toggle_key.clone(), cx);
+                                }))
+                                .on_mouse_down(
+                                    MouseButton::Right,
+                                    cx.listener(move |this, ev: &MouseDownEvent, _, cx| {
+                                        let (x, y) = (
+                                            f64::from(ev.position.x) as f32,
+                                            f64::from(ev.position.y) as f32,
+                                        );
+                                        this.open_sidebar_menu(
+                                            x,
+                                            y,
+                                            SidebarTarget::GroupHeader(gidx),
+                                            cx,
+                                        );
+                                        cx.stop_propagation();
+                                    }),
+                                ),
+                        )
+                        .into_any_element(),
+                );
+                if !is_col {
+                    if g.paths.is_empty() {
+                        items.push(empty_hint("Right-click a file to add it").into_any_element());
+                    } else {
+                        for p in &g.paths {
+                            push_group_member(&mut items, cx, &mut key, gidx, p.clone(), current, false);
+                        }
+                    }
+                }
+            }
+        }
+
+        // --- Recents (count is user-configurable; 0 hides the section) ---
+        let recent_limit = prefs().recent_limit;
+        if recent_limit > 0 && self.begin_section(&mut items, "Recents", collapsed, cx) {
+            if self.recents.is_empty() {
+                if !collapsed {
+                    items.push(empty_hint("No recent folders").into_any_element());
+                }
+            } else {
+                for p in self.recents.iter().take(recent_limit) {
+                    push_nav(
+                        &mut items,
+                        cx,
+                        &mut key,
+                        path_label(p),
+                        "svg:clock".to_string(),
+                        p.clone(),
+                        current,
+                        collapsed,
+                    );
+                }
+            }
         }
 
         // --- Waterfall: an inline, expandable folder tree of the active dir ---
@@ -15919,16 +15941,17 @@ fn nav_item(
         .id(("nav", key))
         .flex()
         .items_center()
-        .rounded_md()
+        .rounded_lg()
         .cursor_pointer()
-        .text_color(rgb(if active { t.text } else { t.text_muted }));
+        .text_color(rgb(if active { t.text } else { t.text_muted }))
+        .when(active, |d| d.font_weight(FontWeight::MEDIUM));
     base = if collapsed {
-        base.mx_1().px_0().py_1().justify_center()
+        base.mx_1().px_0().py(px(5.0)).justify_center()
     } else {
-        base.mx_2().px_2().py_1().gap_2()
+        base.mx_2().px_2().py(px(5.0)).gap_2()
     };
     let base = if active {
-        base.bg(rgb(t.surface))
+        base.bg(Theme::alpha(t.accent, 0x2a))
     } else {
         base.hover(|s| s.bg(rgb(t.hover)))
             .active(|s| s.bg(rgb(t.selected)))
@@ -16439,7 +16462,10 @@ fn icon_element_sized(path: &Path, is_dir: bool, size: f32) -> AnyElement {
             .and_then(|k| lookup_cached(&k))
             .or_else(|| lookup_cached(FOLDER_KEY))
     } else {
-        lookup_icon(path).or_else(|| lookup_cached(FILE_KEY))
+        thumb_key(path)
+            .and_then(|k| lookup_cached(&k))
+            .or_else(|| lookup_icon(path))
+            .or_else(|| lookup_cached(FILE_KEY))
     };
     if let Some(handle) = handle {
         return img(ImageSource::Render(handle))
@@ -16458,6 +16484,34 @@ thread_local! {
     // not once per file. `None` records "couldn't build one" to avoid retrying.
     static ICON_CACHE: RefCell<HashMap<String, Option<Arc<RenderImage>>>> =
         RefCell::new(HashMap::new());
+}
+
+/// Cache key for an image's own thumbnail (one per file, not per type).
+fn thumb_key(path: &Path) -> Option<String> {
+    is_image(path).then(|| format!("thumb:{}", path.to_string_lossy()))
+}
+
+/// Largest image we'll decode for an icon thumbnail.
+const THUMB_MAX_BYTES: u64 = 40 * 1024 * 1024;
+
+/// Decode an image file into a square 128px icon (aspect preserved, transparent
+/// padding). Pure CPU + file IO, so it runs off the main thread. `None` for
+/// formats the decoder can't read (the type icon is shown instead).
+fn decode_thumb(path: &Path) -> Option<Arc<RenderImage>> {
+    if fs::metadata(path).ok()?.len() > THUMB_MAX_BYTES {
+        return None;
+    }
+    let thumb = image::open(path).ok()?.thumbnail(128, 128).to_rgba8();
+    let mut canvas = image::RgbaImage::new(128, 128);
+    let (ox, oy) = ((128 - thumb.width()) / 2, (128 - thumb.height()) / 2);
+    image::imageops::overlay(&mut canvas, &thumb, ox as i64, oy as i64);
+    let mut raw = canvas.into_raw();
+    // RenderImage expects BGRA.
+    for px in raw.chunks_exact_mut(4) {
+        px.swap(0, 2);
+    }
+    let buffer = image::RgbaImage::from_raw(128, 128, raw)?;
+    Some(Arc::new(RenderImage::new(vec![image::Frame::new(buffer)])))
 }
 
 /// Cache key for an application bundle's own icon (one per app, not per type).
@@ -17759,6 +17813,7 @@ fn icon_svg_body(name: &str) -> Option<&'static str> {
         "trash" => r#"<path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/>"#,
         "server" => r#"<rect width="20" height="8" x="2" y="2" rx="2"/><rect width="20" height="8" x="2" y="14" rx="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/>"#,
         "link" => r#"<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>"#,
+        "plus" => r#"<path d="M5 12h14"/><path d="M12 5v14"/>"#,
         "chevron-left" => r#"<path d="m15 18-6-6 6-6"/>"#,
         "search" => r#"<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>"#,
         "folder-plus" => r#"<path d="M12 10v6"/><path d="M9 13h6"/><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/>"#,
