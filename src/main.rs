@@ -85,6 +85,17 @@ struct Theme {
 }
 
 impl Theme {
+    /// `color` blended toward the app background by `a` (0..=255) as opaque RGB,
+    /// for tinting line icons (which take an RGB value, not RGBA).
+    fn alpha_hex(color: u32, a: u32) -> u32 {
+        let bg = theme().bg;
+        let mix = |sh: u32| {
+            let (c, b) = ((color >> sh) & 0xff, (bg >> sh) & 0xff);
+            (c * a + b * (255 - a)) / 255
+        };
+        (mix(16) << 16) | (mix(8) << 8) | mix(0)
+    }
+
     /// A translucent variant of a base color, for floating panels. `a` is 0..=255.
     fn alpha(color: u32, a: u32) -> Rgba {
         rgba((color << 8) | (a & 0xff))
@@ -11545,7 +11556,7 @@ impl Rednif {
                                     .rounded_full()
                                     .bg(rgba(0x000000aa))
                                     .text_xs()
-                                    .child(pager_btn("pdf-prev", "‹", page > 0).on_click(
+                                    .child(pager_btn("pdf-prev", "chevron-left", page > 0).on_click(
                                         cx.listener(move |this, _: &ClickEvent, _, cx| {
                                             if this.preview_page > 0 {
                                                 this.preview_page -= 1;
@@ -11563,7 +11574,7 @@ impl Rednif {
                                             .text_color(rgba(0xffffffdd))
                                             .child(format!("{} / {}", page + 1, count)),
                                     )
-                                    .child(pager_btn("pdf-next", "›", page + 1 < count).on_click(
+                                    .child(pager_btn("pdf-next", "chevron-right", page + 1 < count).on_click(
                                         cx.listener(move |this, _: &ClickEvent, _, cx| {
                                             let count =
                                                 lookup_pdf_count(&next_sel).unwrap_or(1);
@@ -12853,8 +12864,8 @@ impl Rednif {
             .flex()
             .items_center()
             .gap_1()
-            .px_2()
-            .py_1()
+            .px_3()
+            .py(px(6.0))
             .min_w_0()
             .overflow_hidden()
             .border_b_1()
@@ -12896,17 +12907,17 @@ impl Rednif {
             div()
                 .id((id, pane)) // ids must be unique per pane, or only one pane works
                 .flex_none()
-                .w(px(24.0))
-                .h(px(22.0))
+                .w(px(28.0))
+                .h(px(28.0))
                 .flex()
                 .items_center()
                 .justify_center()
-                .rounded_md()
+                .rounded_lg()
                 .cursor_pointer()
                 .text_color(if on { rgb(t.text) } else { rgb(t.text_dim) })
                 .when(on, |s| s.bg(rgb(t.surface)))
                 .hover(|s| s.bg(rgb(t.hover)))
-                .child(glyph)
+                .child(line_icon(glyph, 16.0, if on { t.text } else { t.text_dim }))
                 .tooltip(tip(name))
                 .on_click(cx.listener(move |this, _: &ClickEvent, _, cx| {
                     this.set_view(pane, mode, cx);
@@ -12917,16 +12928,16 @@ impl Rednif {
         let search_btn = div()
             .id(("palette-search", pane))
             .flex_none()
-            .w(px(24.0))
-            .h(px(22.0))
+            .w(px(28.0))
+            .h(px(28.0))
             .flex()
             .items_center()
             .justify_center()
-            .rounded_md()
+            .rounded_lg()
             .cursor_pointer()
             .text_color(rgb(t.text_dim))
             .hover(|s| s.bg(rgb(t.hover)).text_color(rgb(t.text)))
-            .child("🔍")
+            .child(line_icon("search", 16.0, t.text_dim))
             .tooltip(tip("Search (⌘P)"))
             .on_click(cx.listener(move |this, _: &ClickEvent, window, cx| {
                 this.active_pane = pane;
@@ -12940,16 +12951,16 @@ impl Rednif {
         let new_folder_btn = div()
             .id(("tb-new-folder", pane))
             .flex_none()
-            .w(px(24.0))
-            .h(px(22.0))
+            .w(px(28.0))
+            .h(px(28.0))
             .flex()
             .items_center()
             .justify_center()
-            .rounded_md()
+            .rounded_lg()
             .cursor_pointer()
             .text_color(rgb(t.text_dim))
             .hover(|s| s.bg(rgb(t.hover)).text_color(rgb(t.text)))
-            .child("🗀")
+            .child(line_icon("folder-plus", 16.0, t.text_dim))
             .tooltip(tip("New Folder (⇧⌘N)"))
             .on_click(cx.listener(move |this, _: &ClickEvent, window, cx| {
                 this.active_pane = pane;
@@ -12961,15 +12972,15 @@ impl Rednif {
         let delete_btn = div()
             .id(("tb-delete", pane))
             .flex_none()
-            .w(px(24.0))
-            .h(px(22.0))
+            .w(px(28.0))
+            .h(px(28.0))
             .flex()
             .items_center()
             .justify_center()
-            .rounded_md()
+            .rounded_lg()
             .when(has_sel, |d| d.text_color(rgb(t.text_dim)))
             .when(!has_sel, |d| d.text_color(Theme::alpha(t.text_dim, 0x66)))
-            .child("🗑")
+            .child(line_icon("trash", 16.0, if has_sel { t.text_dim } else { Theme::alpha_hex(t.text_dim, 0x66) }))
             .tooltip(tip(if has_sel { "Move to Trash (⌫)" } else { "Move to Trash (select an item first)" }))
             .when(has_sel, |d| {
                 d.cursor_pointer()
@@ -12985,14 +12996,15 @@ impl Rednif {
         let sort_btn = div()
             .id(("sort-by", pane))
             .flex_none()
-            .px_2()
-            .h(px(22.0))
+            .w(px(28.0))
+            .h(px(28.0))
             .flex()
             .items_center()
-            .rounded_md()
+            .justify_center()
+            .rounded_lg()
             .when(sort_enabled, |d| d.text_color(rgb(t.text_dim)))
             .when(!sort_enabled, |d| d.text_color(Theme::alpha(t.text_dim, 0x66)))
-            .child("⇅")
+            .child(line_icon("sort", 16.0, if sort_enabled { t.text_dim } else { Theme::alpha_hex(t.text_dim, 0x66) }))
             .tooltip(tip(if sort_enabled { "Sort By" } else { "Sort By (not available in Column view)" }))
             .when(sort_enabled, |d| {
                 d.cursor_pointer()
@@ -13014,15 +13026,15 @@ impl Rednif {
         let share_btn = div()
             .id(("tb-share", pane))
             .flex_none()
-            .w(px(24.0))
-            .h(px(22.0))
+            .w(px(28.0))
+            .h(px(28.0))
             .flex()
             .items_center()
             .justify_center()
-            .rounded_md()
+            .rounded_lg()
             .when(has_sel, |d| d.text_color(rgb(t.text_dim)))
             .when(!has_sel, |d| d.text_color(Theme::alpha(t.text_dim, 0x66)))
-            .child("⇪")
+            .child(line_icon("share", 16.0, if has_sel { t.text_dim } else { Theme::alpha_hex(t.text_dim, 0x66) }))
             .tooltip(tip(if has_sel { "Share… (⇧⌘S)" } else { "Share (select an item first)" }))
             .when(has_sel, |d| {
                 d.cursor_pointer()
@@ -13047,26 +13059,26 @@ impl Rednif {
         let compact = w > 0.0 && w < 640.0;
         let tiny = w > 0.0 && w < 470.0;
         let (cur_glyph, cur_name) = match view {
-            ViewMode::List => ("☰", "List"),
-            ViewMode::Icons => ("▦", "Icons"),
-            ViewMode::Columns => ("▥", "Columns"),
-            ViewMode::Gallery => ("▭", "Gallery"),
+            ViewMode::List => ("view-list", "List"),
+            ViewMode::Icons => ("view-icons", "Icons"),
+            ViewMode::Columns => ("view-columns", "Columns"),
+            ViewMode::Gallery => ("view-gallery", "Gallery"),
         };
         let view_menu_btn = div()
             .id(("view-menu", pane))
             .flex_none()
             .px_1p5()
-            .h(px(22.0))
+            .h(px(28.0))
             .flex()
             .items_center()
             .gap_0p5()
-            .rounded_md()
+            .rounded_lg()
             .cursor_pointer()
             .text_color(rgb(t.text))
             .bg(rgb(t.surface))
             .hover(|s| s.bg(rgb(t.hover)))
-            .child(cur_glyph)
-            .child(div().text_xs().text_color(rgb(t.text_dim)).child("▾"))
+            .child(line_icon(cur_glyph, 16.0, t.text))
+            .child(line_icon("chevron-down", 12.0, t.text_dim))
             .tooltip(tip(format!("View: {cur_name}")))
             .on_mouse_down(
                 MouseButton::Left,
@@ -13080,7 +13092,7 @@ impl Rednif {
             .flex_none()
             .flex()
             .items_center()
-            .gap_1()
+            .gap_0p5()
             .pl_2()
             // File actions (hidden on remote tabs, which can't create locally).
             .when(!is_remote && !tiny, |d| d.child(new_folder_btn))
@@ -13088,10 +13100,10 @@ impl Rednif {
             .when(!tiny, |d| d.child(search_btn))
             .when(compact, |d| d.child(view_menu_btn))
             .when(!compact, |d| {
-                d.child(btn("view-list", "☰", "List view", ViewMode::List, cx))
-                    .child(btn("view-icons", "▦", "Icon view", ViewMode::Icons, cx))
-                    .child(btn("view-columns", "▥", "Column view", ViewMode::Columns, cx))
-                    .child(btn("view-gallery", "▭", "Gallery view", ViewMode::Gallery, cx))
+                d.child(btn("view-list", "view-list", "List view", ViewMode::List, cx))
+                    .child(btn("view-icons", "view-icons", "Icon view", ViewMode::Icons, cx))
+                    .child(btn("view-columns", "view-columns", "Column view", ViewMode::Columns, cx))
+                    .child(btn("view-gallery", "view-gallery", "Gallery view", ViewMode::Gallery, cx))
             })
             .child(sort_btn)
     }
@@ -13181,7 +13193,10 @@ impl Rednif {
             // Clip so long paths can't paint over the view/sort toolbar (or
             // bleed into the neighbouring pane) when a pane is narrow.
             .overflow_hidden()
-            .h(px(22.0))
+            .h(px(28.0))
+            .px_2()
+            .rounded_lg()
+            .bg(Theme::alpha(theme().surface, 0x99))
             .children(segs)
             // Filler captures clicks on the empty part of the bar → edit mode.
             .child(
@@ -13238,9 +13253,9 @@ impl Rednif {
             .min_w_0()
             .flex()
             .items_center()
-            .px_2()
-            .h(px(22.0))
-            .rounded_md()
+            .px_3()
+            .h(px(28.0))
+            .rounded_lg()
             .bg(rgb(t.surface))
             .border_1()
             .border_color(rgb(t.accent))
@@ -14780,7 +14795,7 @@ fn display_path(p: &Path) -> String {
 /// A back/forward navigation arrow. Dimmed and inert when `enabled` is false.
 fn nav_arrow(
     id: impl Into<ElementId>,
-    glyph: &'static str,
+    glyph: &'static str, // bundled icon name
     enabled: bool,
     on_click: impl Fn(&ClickEvent, &mut Window, &mut App) + 'static,
 ) -> AnyElement {
@@ -14788,14 +14803,13 @@ fn nav_arrow(
     let base = div()
         .id(id)
         .flex_none()
-        .w(px(22.0))
-        .h(px(22.0))
+        .w(px(28.0))
+        .h(px(28.0))
         .flex()
         .items_center()
         .justify_center()
-        .rounded_md()
-        .text_color(if enabled { rgb(t.text) } else { rgb(t.text_dim) })
-        .child(glyph);
+        .rounded_lg()
+        .child(line_icon(glyph, 18.0, if enabled { t.text } else { Theme::alpha_hex(t.text_dim, 0x66) }));
     if enabled {
         base.cursor_pointer()
             .hover(|s| s.bg(rgb(t.hover)))
@@ -14823,12 +14837,13 @@ fn breadcrumb_seg(
     div()
         .id(("crumb", key))
         .flex_none()
-        .px_1()
-        .h(px(20.0))
+        .px_1p5()
+        .h(px(22.0))
         .flex()
         .items_center()
         .rounded_md()
         .cursor_pointer()
+        .when(is_current, |d| d.font_weight(FontWeight::SEMIBOLD))
         .text_color(if active { rgb(t.text) } else { rgb(t.text_dim) })
         .hover(|s| s.bg(rgb(t.hover)).text_color(rgb(t.text)))
         .child(label)
@@ -14848,9 +14863,9 @@ fn breadcrumb_seg(
 fn breadcrumb_sep() -> AnyElement {
     div()
         .flex_none()
-        .px(px(2.0))
-        .text_color(rgb(theme().text_dim))
-        .child("/")
+        .flex()
+        .items_center()
+        .child(line_icon("chevron-right", 12.0, Theme::alpha_hex(theme().text_dim, 0xa0)))
         .into_any_element()
 }
 
@@ -17744,6 +17759,15 @@ fn icon_svg_body(name: &str) -> Option<&'static str> {
         "trash" => r#"<path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/>"#,
         "server" => r#"<rect width="20" height="8" x="2" y="2" rx="2"/><rect width="20" height="8" x="2" y="14" rx="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/>"#,
         "link" => r#"<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>"#,
+        "chevron-left" => r#"<path d="m15 18-6-6 6-6"/>"#,
+        "search" => r#"<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>"#,
+        "folder-plus" => r#"<path d="M12 10v6"/><path d="M9 13h6"/><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/>"#,
+        "sort" => r#"<path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/>"#,
+        "share" => r#"<path d="M12 2v13"/><path d="m16 6-4-4-4 4"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>"#,
+        "view-list" => r#"<path d="M3 5h.01"/><path d="M3 12h.01"/><path d="M3 19h.01"/><path d="M8 5h13"/><path d="M8 12h13"/><path d="M8 19h13"/>"#,
+        "view-icons" => r#"<rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/>"#,
+        "view-columns" => r#"<rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/><path d="M15 3v18"/>"#,
+        "view-gallery" => r#"<rect width="18" height="12" x="3" y="3" rx="2"/><path d="M6 20h2"/><path d="M11 20h2"/><path d="M16 20h2"/>"#,
         "chevron-right" => r#"<path d="m9 18 6-6-6-6"/>"#,
         "chevron-down" => r#"<path d="m6 9 6 6 6-6"/>"#,
         "folder" => r#"<path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/>"#,
