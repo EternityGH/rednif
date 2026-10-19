@@ -12,7 +12,7 @@ attested. Before installing, you can cryptographically confirm the DMG you
 downloaded was built by this repo's release workflow from a specific commit:
 
 ```sh
-gh attestation verify Rednif.dmg -R WizenPainter/shuffle
+gh attestation verify Rednif.dmg -R EternityGH/rednif
 ```
 
 (Requires the [GitHub CLI][gh] 2.49+. `gh auth login` once if you haven't.)
@@ -25,7 +25,7 @@ doesn't match anything this repository built.
 You can also inspect the raw attestation:
 
 ```sh
-gh attestation verify Rednif.dmg -R WizenPainter/shuffle --format json
+gh attestation verify Rednif.dmg -R EternityGH/rednif --format json
 ```
 
 ### What this proves (and what it doesn't)
@@ -71,7 +71,7 @@ logs or in the repo.
 | --- | --- |
 | `MACOS_CERT_P12_BASE64` | Developer ID Application cert **+ private key**, exported from Keychain Access as a `.p12`, then `base64 -i DeveloperID.p12 \| pbcopy` |
 | `MACOS_CERT_PASSWORD` | the password you set when exporting that `.p12` |
-| `MACOS_SIGN_IDENTITY` | e.g. `Developer ID Application: Jaime Guzman (Z69U4AQSH3)` |
+| `MACOS_SIGN_IDENTITY` | e.g. `Developer ID Application: Your Name (TEAMID)` |
 
 **Notarization — pick ONE set.**
 
@@ -103,8 +103,8 @@ git tag vX.Y.Z && git push origin vX.Y.Z
 
 The tag must match `Cargo.toml`'s version or the build fails fast.
 
-[releases]: https://github.com/WizenPainter/shuffle/releases/latest
+[releases]: https://github.com/EternityGH/rednif/releases/latest
 [workflow]: .github/workflows/release.yml
 [gh]: https://cli.github.com
 [attest]: https://github.com/actions/attest-build-provenance
-[advisory]: https://github.com/WizenPainter/shuffle/security/advisories/new
+[advisory]: https://github.com/EternityGH/rednif/security/advisories/new

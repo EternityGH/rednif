@@ -165,9 +165,9 @@ const fn light_theme(bg: u32, text: u32, accent: u32) -> Theme {
 /// Built-in palettes shown in Settings — a broad spread across hues, dark and
 /// light. (name, theme)
 const PRESETS: &[(&str, Theme)] = &[
-    // --- Hand-tuned signatures ---
+    // --- Signature palettes ---
     (
-        "Rednif Dark",
+        "Rednif Night",
         Theme {
             bg: 0x1e1e22,
             sidebar: 0x17171a,
@@ -183,7 +183,7 @@ const PRESETS: &[(&str, Theme)] = &[
         },
     ),
     (
-        "Catppuccin Mocha",
+        "Cocoa Night",
         Theme {
             bg: 0x1e1e2e,
             sidebar: 0x181825,
@@ -199,7 +199,7 @@ const PRESETS: &[(&str, Theme)] = &[
         },
     ),
     (
-        "Catppuccin Macchiato",
+        "Mauve Dusk",
         Theme {
             bg: 0x24273a,
             sidebar: 0x1e2030,
@@ -215,7 +215,7 @@ const PRESETS: &[(&str, Theme)] = &[
         },
     ),
     (
-        "Catppuccin Frappé",
+        "Frost Lilac",
         Theme {
             bg: 0x303446,
             sidebar: 0x292c3c,
@@ -231,7 +231,7 @@ const PRESETS: &[(&str, Theme)] = &[
         },
     ),
     (
-        "Catppuccin Latte",
+        "Cream Latte",
         Theme {
             bg: 0xeff1f5,
             sidebar: 0xe6e9ef,
@@ -246,32 +246,32 @@ const PRESETS: &[(&str, Theme)] = &[
             accent: 0x1e66f5,
         },
     ),
-    // --- Popular dark themes (varied accent hues) ---
-    ("Dracula", dark_theme(0x282a36, 0xf8f8f2, 0xbd93f9)),
-    ("Nord", dark_theme(0x2e3440, 0xe5e9f0, 0x88c0d0)),
-    ("Tokyo Night", dark_theme(0x1a1b26, 0xc0caf5, 0x7aa2f7)),
-    ("Gruvbox Dark", dark_theme(0x282828, 0xebdbb2, 0xfe8019)),
-    ("One Dark", dark_theme(0x282c34, 0xabb2bf, 0x61afef)),
-    ("Solarized Dark", dark_theme(0x002b36, 0x93a1a1, 0x268bd2)),
-    ("Monokai", dark_theme(0x272822, 0xf8f8f2, 0xa6e22e)),
-    ("Everforest", dark_theme(0x2d353b, 0xd3c6aa, 0xa7c080)),
-    ("Rosé Pine", dark_theme(0x191724, 0xe0def4, 0xeb6f92)),
-    // --- Bold single-hue darks (green / red / blue / …) ---
-    ("Forest", dark_theme(0x10211a, 0xd6f5e3, 0x4ade80)),
-    ("Crimson", dark_theme(0x211315, 0xf8dcdc, 0xf87171)),
-    ("Ocean", dark_theme(0x0e1a26, 0xd6ecff, 0x38bdf8)),
-    ("Grape", dark_theme(0x1a1326, 0xece0f8, 0xc084fc)),
-    ("Amber", dark_theme(0x221a10, 0xf8ecd6, 0xfbbf24)),
-    ("Rose", dark_theme(0x241620, 0xf8dcee, 0xf472b6)),
-    ("Teal", dark_theme(0x0e201e, 0xd6f5f0, 0x2dd4bf)),
-    ("Sunset", dark_theme(0x241712, 0xfae5d8, 0xfb7185)),
-    // --- Light themes ---
-    ("Solarized Light", light_theme(0xfdf6e3, 0x586e75, 0x268bd2)),
-    ("GitHub Light", light_theme(0xffffff, 0x24292f, 0x0969da)),
-    ("Rosé Pine Dawn", light_theme(0xfaf4ed, 0x575279, 0xd7827e)),
-    ("Mint", light_theme(0xf0faf4, 0x14532d, 0x16a34a)),
-    ("Sky", light_theme(0xeff6ff, 0x1e3a5f, 0x2563eb)),
-    ("Lavender", light_theme(0xf6f2fe, 0x4c3a66, 0x8b5cf6)),
+    // --- Classic darks ---
+    ("Vampire", dark_theme(0x282a36, 0xf8f8f2, 0xbd93f9)),
+    ("Arctic", dark_theme(0x2e3440, 0xe5e9f0, 0x88c0d0)),
+    ("Neon Tokyo", dark_theme(0x1a1b26, 0xc0caf5, 0x7aa2f7)),
+    ("Retro Ember", dark_theme(0x282828, 0xebdbb2, 0xfe8019)),
+    ("Slate", dark_theme(0x282c34, 0xabb2bf, 0x61afef)),
+    ("Deep Teal", dark_theme(0x002b36, 0x93a1a1, 0x268bd2)),
+    ("Lime Pop", dark_theme(0x272822, 0xf8f8f2, 0xa6e22e)),
+    ("Moss", dark_theme(0x2d353b, 0xd3c6aa, 0xa7c080)),
+    ("Rosewood", dark_theme(0x191724, 0xe0def4, 0xeb6f92)),
+    // --- Bold single-hue darks ---
+    ("Evergreen", dark_theme(0x10211a, 0xd6f5e3, 0x4ade80)),
+    ("Ruby", dark_theme(0x211315, 0xf8dcdc, 0xf87171)),
+    ("Deep Sea", dark_theme(0x0e1a26, 0xd6ecff, 0x38bdf8)),
+    ("Violet", dark_theme(0x1a1326, 0xece0f8, 0xc084fc)),
+    ("Honey", dark_theme(0x221a10, 0xf8ecd6, 0xfbbf24)),
+    ("Blush", dark_theme(0x241620, 0xf8dcee, 0xf472b6)),
+    ("Lagoon", dark_theme(0x0e201e, 0xd6f5f0, 0x2dd4bf)),
+    ("Afterglow", dark_theme(0x241712, 0xfae5d8, 0xfb7185)),
+    // --- Light palettes ---
+    ("Parchment", light_theme(0xfdf6e3, 0x586e75, 0x268bd2)),
+    ("Paper White", light_theme(0xffffff, 0x24292f, 0x0969da)),
+    ("Peach Dawn", light_theme(0xfaf4ed, 0x575279, 0xd7827e)),
+    ("Fresh Mint", light_theme(0xf0faf4, 0x14532d, 0x16a34a)),
+    ("Clear Sky", light_theme(0xeff6ff, 0x1e3a5f, 0x2563eb)),
+    ("Lilac Mist", light_theme(0xf6f2fe, 0x4c3a66, 0x8b5cf6)),
 ];
 
 /// Curated per-property options shown in Settings alongside the presets.
@@ -1326,7 +1326,7 @@ impl Settings {
 impl Render for Settings {
     fn render(&mut self, _window: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {
         let t = theme();
-        let tabs = [("General", "\u{2699}"), ("Keybinds", "\u{2318}"), ("Customization", "\u{25d0}")];
+        let tabs = [("General", "settings"), ("Keybinds", "keyboard"), ("Customization", "palette")];
 
         // Left tab rail.
         let mut tab_items: Vec<AnyElement> = Vec::new();
@@ -1337,23 +1337,16 @@ impl Render for Settings {
                     .id(("tab", i))
                     .flex()
                     .items_center()
-                    .gap_2()
+                    .gap_2p5()
                     .px_3()
-                    .py_2()
-                    .mx_2()
-                    .rounded_md()
+                    .py(px(9.0))
+                    .mx_3()
+                    .rounded_xl()
                     .cursor_pointer()
                     .text_color(if active { rgb(t.text) } else { rgb(t.text_muted) })
-                    .when(active, |s| s.bg(rgb(t.surface)))
+                    .when(active, |s| s.bg(Theme::alpha(t.accent, 0x26)).font_weight(FontWeight::MEDIUM))
                     .when(!active, |s| s.hover(|s| s.bg(rgb(t.hover))))
-                    .child(
-                        div()
-                            .w(px(16.0))
-                            .flex()
-                            .justify_center()
-                            .text_color(if active { rgb(t.accent) } else { rgb(t.text_dim) })
-                            .child(glyph.to_string()),
-                    )
+                    .child(line_icon(glyph, 17.0, if active { t.accent } else { t.text_dim }))
                     .child(name.to_string())
                     .on_click(cx.listener(move |this, _: &ClickEvent, _, cx| {
                         this.tab = i;
@@ -1373,11 +1366,11 @@ impl Render for Settings {
                             .id(("sec", i * 100 + si))
                             .flex()
                             .items_center()
-                            .py_1()
-                            .mx_2()
-                            .pl(px(34.0))
+                            .py(px(5.0))
+                            .mx_3()
+                            .pl(px(40.0))
                             .pr_2()
-                            .rounded_md()
+                            .rounded_lg()
                             .cursor_pointer()
                             .text_xs()
                             .text_color(if active_sec { rgb(t.text) } else { rgb(t.text_muted) })
@@ -1397,9 +1390,9 @@ impl Render for Settings {
 
         let rail = div()
             .flex_none()
-            .w(px(184.0))
+            .w(px(216.0))
             .h_full()
-            .pt_3()
+            .pt(px(44.0))
             .flex()
             .flex_col()
             .gap_1()
@@ -1408,9 +1401,9 @@ impl Render for Settings {
             .border_color(rgb(t.border))
             .child(
                 div()
-                    .px_4()
-                    .pb_2()
-                    .text_base()
+                    .px_5()
+                    .pb_3()
+                    .text_xl()
                     .font_weight(FontWeight::BOLD)
                     .text_color(rgb(t.text))
                     .child("Settings"),
@@ -1452,8 +1445,9 @@ impl Render for Settings {
                             .track_scroll(&self.content_scroll)
                             .flex()
                             .flex_col()
-                            .gap_4()
-                            .p_5()
+                            .gap_5()
+                            .px_8()
+                            .py_6()
                             .children(children),
                     )
                     .children(static_scrollbar_thumb(&self.content_scroll)),
@@ -1474,17 +1468,18 @@ impl Settings {
             div()
                 .id(bid)
                 .flex_none()
-                .w(px(24.0))
-                .h(px(24.0))
+                .w(px(28.0))
+                .h(px(28.0))
                 .flex()
                 .items_center()
                 .justify_center()
-                .rounded_md()
+                .rounded_full()
                 .cursor_pointer()
-                .bg(rgb(t.surface))
-                .text_color(rgb(t.text))
-                .hover(|s| s.bg(rgb(t.hover)))
-                .child(glyph)
+                .bg(rgb(t.hover))
+                .border_1()
+                .border_color(rgb(t.border))
+                .hover(|s| s.bg(rgb(t.selected)))
+                .child(line_icon(glyph, 14.0, t.text))
                 .on_click(cx.listener(move |this, _: &ClickEvent, _, cx| {
                     // Stepping also leaves the typing field, committing nothing extra.
                     this.opacity_edit = None;
@@ -1507,7 +1502,7 @@ impl Settings {
                 .flex()
                 .items_center()
                 .justify_center()
-                .rounded_md()
+                .rounded_lg()
                 .bg(rgb(t.bg))
                 .border_1()
                 .border_color(rgb(t.accent))
@@ -1526,7 +1521,7 @@ impl Settings {
                 .flex()
                 .items_center()
                 .justify_center()
-                .rounded_md()
+                .rounded_lg()
                 .cursor_text()
                 .text_color(rgb(t.text))
                 .hover(|s| s.bg(rgb(t.hover)))
@@ -1567,9 +1562,9 @@ impl Settings {
                     .flex()
                     .items_center()
                     .gap_2()
-                    .child(step_btn("opacity-dec", "\u{2212}", -1))
+                    .child(step_btn("opacity-dec", "minus", -1))
                     .child(value)
-                    .child(step_btn("opacity-inc", "+", 1)),
+                    .child(step_btn("opacity-inc", "plus", 1)),
             )
             .into_any_element()
     }
@@ -1608,7 +1603,7 @@ impl Settings {
                     .flex_none()
                     .px_3()
                     .py_1()
-                    .rounded_md()
+                    .rounded_lg()
                     .cursor_pointer()
                     .bg(rgb(t.surface))
                     .text_color(rgb(t.text))
@@ -1687,7 +1682,7 @@ impl Settings {
                                 .flex_none()
                                 .px_3()
                                 .py_1()
-                                .rounded_md()
+                                .rounded_lg()
                                 .cursor_pointer()
                                 .bg(rgb(t.hover))
                                 .text_color(rgb(t.text))
@@ -2003,7 +1998,7 @@ impl Settings {
                     .flex_none()
                     .px_3()
                     .py_1()
-                    .rounded_md()
+                    .rounded_lg()
                     .cursor_pointer()
                     .bg(if avail { rgb(t.accent) } else { rgb(t.surface) })
                     .text_color(if avail { rgb(0xffffff) } else { rgb(t.text) })
@@ -2085,7 +2080,7 @@ impl Settings {
                             .min_w(px(150.0))
                             .px_2()
                             .py(px(2.0))
-                            .rounded_md()
+                            .rounded_lg()
                             .cursor_pointer()
                             .text_xs()
                             .bg(rgb(t.surface))
@@ -2136,27 +2131,52 @@ impl Settings {
             presets.push(
                 div()
                     .id(("preset", i))
-                    .w(px(150.0))
+                    .w(px(164.0))
                     .flex()
                     .flex_col()
-                    .gap_2()
+                    .gap_3()
                     .p_3()
-                    .rounded_lg()
+                    .rounded_xl()
                     .cursor_pointer()
-                    .border_1()
-                    .border_color(if selected { rgb(t.accent) } else { rgb(t.border) })
+                    .border_2()
+                    .border_color(if selected { rgb(t.accent) } else { rgb(preset.border_strong) })
                     .bg(rgb(preset.bg))
                     .hover(|s| s.border_color(rgb(t.accent)))
                     .child(
+                        // Mini window: sidebar strip + content rows in the palette.
                         div()
                             .flex()
-                            .gap_1()
-                            .child(swatch_dot(preset.sidebar))
-                            .child(swatch_dot(preset.surface))
-                            .child(swatch_dot(preset.accent))
-                            .child(swatch_dot(preset.text)),
+                            .h(px(38.0))
+                            .rounded_lg()
+                            .overflow_hidden()
+                            .border_1()
+                            .border_color(rgb(preset.border))
+                            .child(div().w(px(36.0)).h_full().bg(rgb(preset.sidebar)))
+                            .child(
+                                div()
+                                    .flex_1()
+                                    .flex()
+                                    .flex_col()
+                                    .justify_center()
+                                    .gap_1()
+                                    .px_2()
+                                    .child(div().h(px(6.0)).w(px(54.0)).rounded_full().bg(rgb(preset.accent)))
+                                    .child(div().h(px(5.0)).w(px(34.0)).rounded_full().bg(rgb(preset.text_muted))),
+                            ),
                     )
-                    .child(div().text_color(rgb(preset.text)).child(name.to_string()))
+                    .child(
+                        div()
+                            .flex()
+                            .items_center()
+                            .justify_between()
+                            .child(
+                                div()
+                                    .font_weight(FontWeight::MEDIUM)
+                                    .text_color(rgb(preset.text))
+                                    .child(name.to_string()),
+                            )
+                            .when(selected, |d| d.child(line_icon("check", 14.0, preset.accent))),
+                    )
                     .on_click(cx.listener(move |_, _: &ClickEvent, _, cx| {
                         apply_theme(preset, cx);
                         cx.notify();
@@ -2252,7 +2272,7 @@ impl Settings {
                                     .id("icon-bg-upload")
                                     .px_3()
                                     .py_1()
-                                    .rounded_md()
+                                    .rounded_lg()
                                     .cursor_pointer()
                                     .bg(rgb(t.surface))
                                     .border_1()
@@ -2285,7 +2305,7 @@ impl Settings {
                                     .id("icon-bg-reset")
                                     .px_3()
                                     .py_1()
-                                    .rounded_md()
+                                    .rounded_lg()
                                     .cursor_pointer()
                                     .bg(rgb(t.hover))
                                     .hover(|s| s.bg(rgb(t.selected)))
@@ -2320,7 +2340,7 @@ impl Settings {
                             .id("pack-choose")
                             .px_3()
                             .py_1()
-                            .rounded_md()
+                            .rounded_lg()
                             .cursor_pointer()
                             .bg(rgb(t.surface))
                             .border_1()
@@ -2350,7 +2370,7 @@ impl Settings {
                             .id("pack-reset")
                             .px_3()
                             .py_1()
-                            .rounded_md()
+                            .rounded_lg()
                             .cursor_pointer()
                             .bg(rgb(t.hover))
                             .hover(|s| s.bg(rgb(t.selected)))
@@ -2521,7 +2541,7 @@ impl Settings {
                     .id((tag, c as usize))
                     .w(px(22.0))
                     .h(px(22.0))
-                    .rounded_md()
+                    .rounded_lg()
                     .cursor_pointer()
                     .bg(rgb(c))
                     .border_2()
@@ -2556,7 +2576,7 @@ impl Settings {
                     .id((tag, c as usize))
                     .w(px(22.0))
                     .h(px(22.0))
-                    .rounded_md()
+                    .rounded_lg()
                     .cursor_pointer()
                     .bg(rgb(c))
                     .border_2()
@@ -2584,7 +2604,7 @@ impl Settings {
                 .mx_1()
                 .px_3()
                 .py_1()
-                .rounded_md()
+                .rounded_lg()
                 .child(label.to_string())
         };
         div()
@@ -2593,7 +2613,7 @@ impl Settings {
             .bg(m.bg_rgba())
             .text_color(rgb(m.text))
             .text_size(px(m.font_px))
-            .rounded_md()
+            .rounded_xl()
             .border_1()
             .border_color(rgb(t.border_strong))
             .shadow_lg()
@@ -2634,7 +2654,7 @@ impl Settings {
                     .id(("iconbg", c as usize))
                     .w(px(22.0))
                     .h(px(22.0))
-                    .rounded_md()
+                    .rounded_lg()
                     .cursor_pointer()
                     .bg(rgb(c))
                     .border_2()
@@ -2667,7 +2687,7 @@ impl Settings {
             .flex_none()
             .px_2()
             .py(px(2.0))
-            .rounded_md()
+            .rounded_lg()
             .cursor_text()
             .bg(rgb(t.surface))
             .border_1()
@@ -2681,11 +2701,6 @@ impl Settings {
                 cx.notify();
             }))
     }
-}
-
-/// A small color dot used in preset previews.
-fn swatch_dot(color: u32) -> impl IntoElement {
-    div().w(px(14.0)).h(px(14.0)).rounded_full().bg(rgb(color))
 }
 
 /// A label/value line in the Information inspector.
@@ -2759,20 +2774,21 @@ fn settings_title(text: &str) -> impl IntoElement {
 fn settings_header(title: &str, subtitle: &str) -> impl IntoElement {
     let t = theme();
     div()
+        .flex_none()
         .flex()
         .flex_col()
         .gap_1()
-        .pb_1()
+        .pb_2()
         .child(
             div()
-                .text_base()
+                .text_2xl()
                 .font_weight(FontWeight::BOLD)
                 .text_color(rgb(t.text))
                 .child(title.to_string()),
         )
         .child(
             div()
-                .text_xs()
+                .text_sm()
                 .text_color(rgb(t.text_muted))
                 .child(subtitle.to_string()),
         )
@@ -2792,8 +2808,8 @@ fn settings_section(title: &str, subtitle: Option<&str>, rows: Vec<AnyElement>) 
         .flex()
         .flex_col()
         .gap_1()
-        .px_4()
-        .pt_3()
+        .px_5()
+        .pt_4()
         .pb_3()
         .child(
             div()
@@ -2812,12 +2828,14 @@ fn settings_section(title: &str, subtitle: Option<&str>, rows: Vec<AnyElement>) 
 
     let mut card = div()
         .w_full()
+        // Never shrink to fit the window: the page scrolls instead of clipping.
+        .flex_none()
         .flex()
         .flex_col()
-        .rounded_lg()
+        .rounded_2xl()
         .border_1()
         .border_color(rgb(t.border))
-        .bg(Theme::alpha(t.surface, 0x33))
+        .bg(Theme::alpha(t.surface, 0x40))
         .child(header)
         .child(settings_divider());
 
@@ -2825,7 +2843,7 @@ fn settings_section(title: &str, subtitle: Option<&str>, rows: Vec<AnyElement>) 
         if i > 0 {
             card = card.child(settings_divider());
         }
-        card = card.child(div().px_4().py_3().child(row));
+        card = card.child(div().px_5().py_4().child(row));
     }
     card.into_any_element()
 }
@@ -2843,9 +2861,9 @@ fn reset_button(
         .child(
             div()
                 .id(id)
-                .px_3()
-                .py_1()
-                .rounded_md()
+                .px_4()
+                .py(px(6.0))
+                .rounded_full()
                 .cursor_pointer()
                 .bg(rgb(t.hover))
                 .text_color(rgb(t.text))
@@ -2912,7 +2930,7 @@ fn palette_opacity_preview() -> AnyElement {
         .flex_col()
         .overflow_hidden()
         .bg(Theme::alpha(t.surface, palette_alpha()))
-        .rounded_lg()
+        .rounded_xl()
         .border_1()
         .border_color(rgb(t.border_strong))
         .shadow_lg()
@@ -2975,7 +2993,7 @@ fn palette_opacity_preview() -> AnyElement {
         .relative()
         .w_full()
         .h(px(178.0))
-        .rounded_md()
+        .rounded_lg()
         .overflow_hidden()
         .border_1()
         .border_color(rgb(t.border))
@@ -2999,20 +3017,23 @@ fn toggle_row(
     let knob = div()
         .absolute()
         .top(px(2.0))
-        .left(if on { px(20.0) } else { px(2.0) })
-        .w(px(16.0))
-        .h(px(16.0))
+        .left(if on { px(22.0) } else { px(2.0) })
+        .w(px(20.0))
+        .h(px(20.0))
         .rounded_full()
+        .shadow_md()
         .bg(rgb(0xffffff));
     let switch = div()
         .id(id)
         .flex_none()
         .relative()
-        .w(px(38.0))
-        .h(px(20.0))
+        .w(px(44.0))
+        .h(px(24.0))
         .rounded_full()
         .cursor_pointer()
-        .bg(if on { rgb(t.accent) } else { rgb(t.surface) })
+        .border_1()
+        .border_color(if on { rgb(t.accent) } else { rgb(t.border_strong) })
+        .bg(if on { rgb(t.accent) } else { rgb(t.hover) })
         .child(knob)
         .on_click(on_click);
 
@@ -3050,21 +3071,22 @@ fn stepper_row(
     on_inc: impl Fn(&ClickEvent, &mut Window, &mut App) + 'static,
 ) -> impl IntoElement {
     let t = theme();
-    let button = |bid: SharedString, glyph: &str| {
+    let button = |bid: SharedString, icon: &str| {
         div()
             .id(bid)
             .flex_none()
-            .w(px(24.0))
-            .h(px(24.0))
+            .w(px(28.0))
+            .h(px(28.0))
             .flex()
             .items_center()
             .justify_center()
-            .rounded_md()
+            .rounded_full()
             .cursor_pointer()
-            .bg(rgb(t.surface))
-            .text_color(rgb(t.text))
-            .hover(|s| s.bg(rgb(t.hover)))
-            .child(glyph.to_string())
+            .bg(rgb(t.hover))
+            .border_1()
+            .border_color(rgb(t.border))
+            .hover(|s| s.bg(rgb(t.selected)))
+            .child(line_icon(icon, 14.0, t.text))
     };
 
     div()
@@ -3094,7 +3116,7 @@ fn stepper_row(
                 .flex()
                 .items_center()
                 .gap_2()
-                .child(button(SharedString::from(format!("{id}-dec")), "−").on_click(on_dec))
+                .child(button(SharedString::from(format!("{id}-dec")), "minus").on_click(on_dec))
                 .child(
                     div()
                         .w(px(40.0))
@@ -3103,7 +3125,7 @@ fn stepper_row(
                         .text_color(rgb(t.text))
                         .child(value_label),
                 )
-                .child(button(SharedString::from(format!("{id}-inc")), "+").on_click(on_inc)),
+                .child(button(SharedString::from(format!("{id}-inc")), "plus").on_click(on_inc)),
         )
 }
 
@@ -3539,6 +3561,8 @@ struct Tab {
     /// List view: expanded folders, as paths relative to `current_dir`. Their
     /// children are spliced into `entries` as `"folder/child"` names.
     expanded: HashSet<String>,
+    /// The folder just expanded and the animation epoch, so its new rows ease in.
+    expand_anim: Option<(String, u64)>,
     /// Back/forward navigation history and our position within it.
     history: Vec<PathBuf>,
     hist_pos: usize,
@@ -3612,6 +3636,7 @@ impl Tab {
             current_dir: dir.clone(),
             entries,
             expanded: HashSet::new(),
+            expand_anim: None,
             history: vec![dir.clone()],
             hist_pos: 0,
             deepest: Some(dir),
@@ -3686,7 +3711,7 @@ impl Render for TooltipView {
         div()
             .px_2()
             .py_1()
-            .rounded_md()
+            .rounded_xl()
             .bg(Theme::alpha(t.surface, 0xf2))
             .border_1()
             .border_color(rgb(t.border))
@@ -3708,7 +3733,7 @@ impl Render for TabDragPreview {
         div()
             .px_3()
             .py_1()
-            .rounded_md()
+            .rounded_xl()
             .bg(Theme::alpha(t.surface, 0xf2))
             .border_1()
             .border_color(rgb(t.accent))
@@ -3746,6 +3771,10 @@ struct Rednif {
     group_dialog: Option<String>,
     /// Sidebar section titles the user has collapsed (hidden their items).
     collapsed_sections: HashSet<String>,
+    /// The sidebar section just expanded and its animation epoch.
+    section_anim: Option<(String, u64)>,
+    /// Epoch of the last sidebar collapse/expand, so the width eases.
+    sidebar_anim: Option<u64>,
     widths: ColumnWidths,
     resize: Option<Resize>,
     scroll_drag: Option<ScrollDrag>,
@@ -3807,6 +3836,9 @@ struct Rednif {
     /// The row the mouse is currently over: (pane, path). Enter renames it
     /// even when nothing is selected (point-and-rename).
     hovered: Option<(usize, PathBuf)>,
+    /// Type-to-select: the characters typed so far and when the last one landed.
+    type_buf: String,
+    type_at: Option<Instant>,
     /// Where a file drag would land right now: (pane, Some(display row)) for
     /// a folder row, (pane, None) for the pane's own directory. Computed from
     /// the drag position on every synthesized drag-move — one source of truth,
@@ -4105,6 +4137,8 @@ impl Rednif {
             sidebar_menu: None,
             group_dialog: None,
             collapsed_sections: read_string_list("collapsed_sections.txt").into_iter().collect(),
+            section_anim: None,
+            sidebar_anim: None,
             widths: ColumnWidths::default(),
             resize: None,
             scroll_drag: None,
@@ -4139,6 +4173,8 @@ impl Rednif {
             update: None,
             preview_page: 0,
             hovered: None,
+            type_buf: String::new(),
+            type_at: None,
             drop_hover: None,
             remote_error: None,
             waterfall_expanded: HashSet::new(),
@@ -4537,12 +4573,16 @@ impl Rednif {
 
     /// Expand or collapse a folder row in List view.
     fn toggle_expand(&mut self, pane: usize, rel: String, cx: &mut Context<Self>) {
+        self.next_load_gen += 1;
+        let epoch = self.next_load_gen;
         let tab = self.tab_mut(pane);
         if !tab.expanded.remove(&rel) {
-            tab.expanded.insert(rel);
+            tab.expanded.insert(rel.clone());
+            tab.expand_anim = Some((rel, epoch));
         } else {
             let prefix = format!("{rel}/");
             tab.expanded.retain(|e| !e.starts_with(&prefix));
+            tab.expand_anim = None;
         }
         self.sort_tab(pane);
         if self.tab(pane).find_query.is_some() {
@@ -5104,7 +5144,7 @@ impl Rednif {
                 .id(id)
                 .px_3()
                 .py_1()
-                .rounded_md()
+                .rounded_lg()
                 .cursor_pointer()
                 .text_xs()
                 .text_color(rgb(t.text))
@@ -5125,7 +5165,7 @@ impl Rednif {
                 .flex_col()
                 .gap_4()
                 .p_5()
-                .rounded_lg()
+                .rounded_xl()
                 .bg(rgb(t.surface))
                 .border_1()
                 .border_color(rgb(t.border_strong))
@@ -5276,7 +5316,7 @@ impl Rednif {
                 .id(("batch-mode", mode as usize))
                 .px_3()
                 .py_1()
-                .rounded_md()
+                .rounded_lg()
                 .cursor_pointer()
                 .text_xs()
                 .text_color(rgb(if on { t.text } else { t.text_dim }))
@@ -5308,7 +5348,7 @@ impl Rednif {
                         .px_2()
                         .flex()
                         .items_center()
-                        .rounded_md()
+                        .rounded_lg()
                         .bg(rgb(t.bg))
                         .border_1()
                         .border_color(rgb(if focused { t.accent } else { t.border_strong }))
@@ -5401,7 +5441,7 @@ impl Rednif {
                 .flex_col()
                 .gap_4()
                 .p_5()
-                .rounded_lg()
+                .rounded_xl()
                 .bg(rgb(t.surface))
                 .border_1()
                 .border_color(rgb(t.border_strong))
@@ -5428,7 +5468,7 @@ impl Rednif {
                                 .id("batch-cancel")
                                 .px_3()
                                 .py_1()
-                                .rounded_md()
+                                .rounded_lg()
                                 .cursor_pointer()
                                 .text_color(rgb(t.text))
                                 .bg(rgb(t.hover))
@@ -5444,7 +5484,7 @@ impl Rednif {
                                 .id("batch-apply")
                                 .px_3()
                                 .py_1()
-                                .rounded_md()
+                                .rounded_lg()
                                 .cursor_pointer()
                                 .text_color(rgb(0xffffff))
                                 .bg(rgb(t.accent))
@@ -5550,7 +5590,7 @@ impl Rednif {
             .flex_col()
             .gap_2()
             .p_3()
-            .rounded_lg()
+            .rounded_xl()
             .bg(rgb(t.surface))
             .border_1()
             .border_color(rgb(t.border_strong))
@@ -6994,7 +7034,7 @@ impl Rednif {
                     .h(px(MENU_ROW_H))
                     .mx_1()
                     .px_2()
-                    .rounded_md()
+                    .rounded_lg()
                     .flex()
                     .items_center()
                     .gap_2()
@@ -7036,7 +7076,7 @@ impl Rednif {
                 .h(px(MENU_ROW_H))
                 .mx_1()
                 .px_2()
-                .rounded_md()
+                .rounded_lg()
                 .flex()
                 .items_center()
                 .gap_2()
@@ -7061,12 +7101,13 @@ impl Rednif {
         let ms = menu_style();
         let panel = move |rows: Vec<AnyElement>| {
             div()
-                .min_w(px(210.0))
-                .py_1()
+                .min_w(px(220.0))
+                .py_1p5()
+                .px_0p5()
                 .bg(ms.bg_rgba())
                 .text_color(rgb(ms.text))
                 .text_size(px(ms.font_px))
-                .rounded_md()
+                .rounded_xl()
                 .border_1()
                 .border_color(rgb(theme().border_strong))
                 .shadow_lg()
@@ -7171,7 +7212,7 @@ impl Rednif {
                     .mx_1()
                     .px_3()
                     .py_1()
-                    .rounded_md()
+                    .rounded_lg()
                     .cursor_pointer()
                     .text_color(rgb(t.text))
                     .hover(|s| s.bg(rgb(t.selected)))
@@ -7205,7 +7246,7 @@ impl Rednif {
                             .min_w(px(180.0))
                             .py_1()
                             .bg(rgb(t.surface))
-                            .rounded_md()
+                            .rounded_xl()
                             .border_1()
                             .border_color(rgb(t.border_strong))
                             .shadow_lg()
@@ -7247,7 +7288,7 @@ impl Rednif {
                     .flex_col()
                     .gap_4()
                     .p_5()
-                    .rounded_lg()
+                    .rounded_xl()
                     .bg(rgb(t.surface))
                     .border_1()
                     .border_color(rgb(t.border_strong))
@@ -7270,7 +7311,7 @@ impl Rednif {
                                     .id("del-cancel")
                                     .px_3()
                                     .py_1()
-                                    .rounded_md()
+                                    .rounded_lg()
                                     .cursor_pointer()
                                     .text_color(rgb(t.text))
                                     .bg(rgb(t.hover))
@@ -7286,7 +7327,7 @@ impl Rednif {
                                     .id("del-confirm")
                                     .px_3()
                                     .py_1()
-                                    .rounded_md()
+                                    .rounded_lg()
                                     .cursor_pointer()
                                     .text_color(rgb(0xffffff))
                                     .bg(rgb(0xd9544f))
@@ -7513,7 +7554,7 @@ impl Rednif {
                 .justify_center()
                 .px_3()
                 .py_1()
-                .rounded_md()
+                .rounded_lg()
                 .cursor_pointer()
                 .text_color(if active { rgb(t.text) } else { rgb(t.text_muted) })
                 .bg(if active { rgb(t.surface) } else { rgba(0x00000000) })
@@ -7530,7 +7571,7 @@ impl Rednif {
             .flex()
             .gap_1()
             .p_1()
-            .rounded_md()
+            .rounded_lg()
             .bg(rgb(t.bg))
             .child(mode_tab("Quick Connect", ServerMode::Quick))
             .child(mode_tab("Credentials", ServerMode::Credentials));
@@ -7558,7 +7599,7 @@ impl Rednif {
                         .items_center()
                         .px_3()
                         .py_2()
-                        .rounded_md()
+                        .rounded_lg()
                         .bg(rgb(t.bg))
                         .border_1()
                         .border_color(if focused { rgb(t.accent) } else { rgb(t.border) })
@@ -7596,7 +7637,7 @@ impl Rednif {
                                 .id(SharedString::from(format!("srv-{u}")))
                                 .px_2()
                                 .py_1()
-                                .rounded_md()
+                                .rounded_lg()
                                 .cursor_pointer()
                                 .text_color(rgb(t.text_muted))
                                 .hover(|s| s.bg(rgb(t.hover)).text_color(rgb(t.text)))
@@ -7620,7 +7661,7 @@ impl Rednif {
                             .items_center()
                             .px_3()
                             .py_2()
-                            .rounded_md()
+                            .rounded_lg()
                             .bg(rgb(t.bg))
                             .border_1()
                             .border_color(rgb(t.accent))
@@ -7674,7 +7715,7 @@ impl Rednif {
                     .flex_col()
                     .gap_3()
                     .p_5()
-                    .rounded_lg()
+                    .rounded_xl()
                     .bg(rgb(t.surface))
                     .border_1()
                     .border_color(rgb(t.border_strong))
@@ -7734,7 +7775,7 @@ impl Rednif {
                                     .id("srv-cancel")
                                     .px_3()
                                     .py_1()
-                                    .rounded_md()
+                                    .rounded_lg()
                                     .cursor_pointer()
                                     .text_color(rgb(t.text))
                                     .bg(rgb(t.hover))
@@ -7750,7 +7791,7 @@ impl Rednif {
                                     .id("srv-connect")
                                     .px_3()
                                     .py_1()
-                                    .rounded_md()
+                                    .rounded_lg()
                                     .cursor_pointer()
                                     .text_color(rgb(0xffffff))
                                     .bg(rgb(t.accent))
@@ -7775,7 +7816,7 @@ impl Rednif {
                     .flex_col()
                     .gap_1()
                     .p_3()
-                    .rounded_md()
+                    .rounded_lg()
                     .cursor_pointer()
                     .bg(rgb(t.bg))
                     .border_1()
@@ -7812,7 +7853,7 @@ impl Rednif {
                     .flex_col()
                     .gap_3()
                     .p_5()
-                    .rounded_lg()
+                    .rounded_xl()
                     .bg(rgb(t.surface))
                     .border_1()
                     .border_color(rgb(t.border_strong))
@@ -7876,7 +7917,7 @@ impl Rednif {
                     .flex_col()
                     .gap_3()
                     .p_5()
-                    .rounded_lg()
+                    .rounded_xl()
                     .bg(rgb(t.surface))
                     .border_1()
                     .border_color(rgb(t.border_strong))
@@ -7889,7 +7930,7 @@ impl Rednif {
                             .items_center()
                             .px_3()
                             .py_2()
-                            .rounded_md()
+                            .rounded_lg()
                             .bg(rgb(t.bg))
                             .border_1()
                             .border_color(rgb(t.accent))
@@ -7906,7 +7947,7 @@ impl Rednif {
                                     .id("grp-cancel")
                                     .px_3()
                                     .py_1()
-                                    .rounded_md()
+                                    .rounded_lg()
                                     .cursor_pointer()
                                     .text_color(rgb(t.text))
                                     .bg(rgb(t.hover))
@@ -7922,7 +7963,7 @@ impl Rednif {
                                     .id("grp-create")
                                     .px_3()
                                     .py_1()
-                                    .rounded_md()
+                                    .rounded_lg()
                                     .cursor_pointer()
                                     .text_color(rgb(0xffffff))
                                     .bg(rgb(t.accent))
@@ -8112,7 +8153,7 @@ impl Rednif {
                         .bg(menu_style().bg_rgba())
                         .text_color(rgb(menu_style().text))
                         .text_size(px(menu_style().font_px))
-                        .rounded_md()
+                        .rounded_xl()
                         .border_1()
                         .border_color(rgb(theme().border_strong))
                         .shadow_lg()
@@ -8248,7 +8289,7 @@ impl Rednif {
                         .id("update-install")
                         .px_3()
                         .py_1()
-                        .rounded_md()
+                        .rounded_lg()
                         .bg(rgba(0xffffff33))
                         .cursor_pointer()
                         .hover(|s| s.bg(rgba(0xffffff55)))
@@ -8263,7 +8304,7 @@ impl Rednif {
                         .id("update-dismiss")
                         .px_2()
                         .py_1()
-                        .rounded_md()
+                        .rounded_lg()
                         .cursor_pointer()
                         .hover(|s| s.bg(rgba(0xffffff33)))
                         .child("✕")
@@ -8285,7 +8326,7 @@ impl Rednif {
                         .id("update-manual")
                         .px_3()
                         .py_1()
-                        .rounded_md()
+                        .rounded_lg()
                         .bg(rgba(0xffffff33))
                         .cursor_pointer()
                         .hover(|s| s.bg(rgba(0xffffff55)))
@@ -8304,7 +8345,7 @@ impl Rednif {
                         .id("update-dismiss-failed")
                         .px_2()
                         .py_1()
-                        .rounded_md()
+                        .rounded_lg()
                         .cursor_pointer()
                         .hover(|s| s.bg(rgba(0xffffff33)))
                         .child("✕")
@@ -8938,6 +8979,19 @@ impl Rednif {
                     self.quick_look(pane);
                     return;
                 }
+                // Typing a character jumps to the next item starting with it
+                // (repeat the letter to cycle; type more to refine the prefix).
+                if !ks.modifiers.control && !ks.modifiers.alt {
+                    if let Some(ch) = ks.key_char.as_deref() {
+                        let mut it = ch.chars();
+                        if let (Some(c), None) = (it.next(), it.next()) {
+                            if c.is_alphanumeric() || matches!(c, '.' | '_' | '-') {
+                                self.type_select(pane, ch, cx);
+                                return;
+                            }
+                        }
+                    }
+                }
             }
             // Enter renames the item under the mouse first (point-and-rename),
             // else the focused one (Finder-style; not rebindable). The hover
@@ -9360,7 +9414,7 @@ impl Rednif {
             // Opacity is user-configurable (Settings → Appearance); default is
             // nearly opaque so the palette doesn't read as a confusing overlay.
             .bg(Theme::alpha(t.surface, palette_alpha()))
-            .rounded_lg()
+            .rounded_xl()
             .border_1()
             .border_color(rgb(t.border_strong))
             .shadow_lg()
@@ -9436,7 +9490,7 @@ impl Rednif {
                         .flex_col()
                         .py_1()
                         .bg(Theme::alpha(t.surface, 0xf7))
-                        .rounded_md()
+                        .rounded_xl()
                         .border_1()
                         .border_color(rgb(t.border_strong))
                         .shadow_lg()
@@ -11199,6 +11253,104 @@ impl Rednif {
         self.focus_entry(pane, target, cx);
     }
 
+    /// Type-to-select: move the selection to the next item whose name starts
+    /// with what was just typed, scrolling it into view (Windows-style).
+    fn type_select(&mut self, pane: usize, ch: &str, cx: &mut Context<Self>) {
+        let now = Instant::now();
+        let fresh = self
+            .type_at
+            .map_or(true, |t| now.duration_since(t) > Duration::from_millis(900));
+        self.type_at = Some(now);
+        let c = ch.to_lowercase();
+        let prev = if fresh { String::new() } else { self.type_buf.clone() };
+        // Same letter again → cycle to the next match instead of extending.
+        let cycle = !prev.is_empty() && prev.chars().all(|x| x.to_string() == c);
+        let from_next = prev.is_empty() || cycle;
+        let needle = if from_next { c } else { format!("{prev}{c}") };
+        self.type_buf = needle.clone();
+        self.active_pane = pane;
+
+        if self.tab(pane).view == ViewMode::Columns {
+            let base = self.tab(pane).current_dir.clone();
+            let mut dirs: Vec<PathBuf> = vec![base];
+            dirs.extend(self.tab(pane).col_chain.iter().cloned());
+            let k = self.tab(pane).col_active.min(dirs.len() - 1);
+            let dir = dirs[k].clone();
+            let entries = column_entries(&dir);
+            if entries.is_empty() {
+                return;
+            }
+            let sel = if k < self.tab(pane).col_chain.len() {
+                Some(self.tab(pane).col_chain[k].clone())
+            } else {
+                self.tab(pane).anchor.clone()
+            };
+            let cur = sel.and_then(|p| entries.iter().position(|e| dir.join(&e.name) == p));
+            let start = match cur {
+                Some(i) if from_next => i + 1,
+                Some(i) => i,
+                None => 0,
+            };
+            let n = entries.len();
+            if let Some(ix) = (0..n)
+                .map(|o| (start + o) % n)
+                .find(|&i| entries[i].name.to_lowercase().starts_with(&needle))
+            {
+                self.column_set(pane, k, &dirs, ix, cx);
+            }
+            return;
+        }
+
+        let (dir, cur, names) = {
+            let tab = self.tab(pane);
+            let dir = tab.current_dir.clone();
+            let cur = tab
+                .anchor
+                .as_ref()
+                .and_then(|a| tab.entries.iter().position(|e| dir.join(&e.name) == *a));
+            // Nested (expanded) rows are named "folder/child"; match the leaf.
+            let names: Vec<String> = tab
+                .entries
+                .iter()
+                .map(|e| e.name.rsplit('/').next().unwrap_or(&e.name).to_lowercase())
+                .collect();
+            (dir, cur, names)
+        };
+        let n = names.len();
+        if n == 0 {
+            return;
+        }
+        let start = match cur {
+            Some(i) if from_next => i + 1,
+            Some(i) => i,
+            None => 0,
+        };
+        let Some(ni) = (0..n)
+            .map(|o| (start + o) % n)
+            .find(|&i| names[i].starts_with(&needle))
+        else {
+            return;
+        };
+        let target = dir.join(&self.tab(pane).entries[ni].name);
+        {
+            let tab = self.tab_mut(pane);
+            tab.selection.clear();
+            tab.selection.insert(target.clone());
+        }
+        let offset = usize::from(
+            self.tab(pane).find_query.is_none()
+                && prefs().show_parent
+                && self.tab(pane).current_dir.parent().is_some(),
+        );
+        let item = match self.tab(pane).view {
+            ViewMode::Icons => ni / self.icon_cols(pane),
+            _ => ni + offset,
+        };
+        self.tab(pane).scroll_handle.scroll_to_item(item, ScrollStrategy::Center);
+        self.mark_scrolled(pane, cx);
+        self.focus_entry(pane, target, cx);
+    }
+
     /// Arrow navigation within the Column (Miller) view.
     fn arrow_columns(&mut self, pane: usize, dx: i32, dy: i32, cx: &mut Context<Self>) {
         let base = self.tab(pane).current_dir.clone();
@@ -11431,7 +11583,7 @@ impl Rednif {
                         .gap_2()
                         .px_3()
                         .py_2()
-                        .rounded_lg()
+                        .rounded_xl()
                         .bg(Theme::alpha(t.surface, 0xf2))
                         .border_1()
                         .border_color(rgb(RENAME_ERR_COLOR))
@@ -11515,7 +11667,7 @@ impl Rednif {
                 .max_h(px(380.0))
                 .overflow_hidden()
                 .p_2()
-                .rounded_md()
+                .rounded_lg()
                 // White "page" so document/text previews (black text, often
                 // transparent background) stay readable on dark themes.
                 .bg(rgb(0xffffff))
@@ -11917,7 +12069,7 @@ impl Rednif {
             .gap_2()
             .px_3()
             .py_2()
-            .rounded_lg()
+            .rounded_xl()
             .bg(Theme::alpha(t.surface, 0xf2))
             .border_1()
             .border_color(rgb(t.accent))
@@ -11962,7 +12114,7 @@ impl Rednif {
                 .gap_1()
                 .px_3()
                 .py_1()
-                .rounded_lg()
+                .rounded_xl()
                 .cursor_pointer()
                 .bg(Theme::alpha(t.surface, 0xe6))
                 .border_1()
@@ -12205,8 +12357,12 @@ impl Rednif {
 
     /// Toggle whether a sidebar section (by title) is collapsed, and persist it.
     fn toggle_section(&mut self, title: String, cx: &mut Context<Self>) {
-        if !self.collapsed_sections.remove(&title) {
+        if self.collapsed_sections.remove(&title) {
+            self.next_load_gen += 1;
+            self.section_anim = Some((title, self.next_load_gen));
+        } else {
             self.collapsed_sections.insert(title);
+            self.section_anim = None;
         }
         let list: Vec<String> = self.collapsed_sections.iter().cloned().collect();
         write_string_list("collapsed_sections.txt", &list);
@@ -12436,7 +12592,7 @@ impl Rednif {
                 .mx_2()
                 .py_1()
                 .pr_2()
-                .rounded_md()
+                .rounded_lg()
                 .cursor_pointer()
                 .text_color(rgb(if active { t.text } else { t.text_muted }));
             row = if active {
@@ -12502,6 +12658,8 @@ impl Rednif {
         let collapsed = prefs().sidebar_collapsed;
         let mut items: Vec<AnyElement> = Vec::new();
         let mut key = 0usize;
+        // (section title, index of its header in `items`), for expand animations.
+        let mut marks: Vec<(&'static str, usize)> = Vec::new();
 
         // --- Collapse / expand toggle (always present) ---
         let chevron = if collapsed { "»" } else { "«" };
@@ -12520,7 +12678,9 @@ impl Rednif {
                 .hover(|s| s.text_color(rgb(theme().text)))
                 .child(chevron)
                 .tooltip(tip(if collapsed { "Expand sidebar" } else { "Collapse sidebar" }))
-                .on_click(cx.listener(|_, _: &ClickEvent, _, cx| {
+                .on_click(cx.listener(|this, _: &ClickEvent, _, cx| {
+                    this.next_load_gen += 1;
+                    this.sidebar_anim = Some(this.next_load_gen);
                     let mut np = prefs();
                     np.sidebar_collapsed = !np.sidebar_collapsed;
                     apply_prefs(np, cx);
@@ -12530,6 +12690,7 @@ impl Rednif {
         );
 
         // --- Favorites (Applications, Documents, …) ---
+        marks.push(("Favorites", items.len()));
         if self.begin_section(&mut items, "Favorites", collapsed, cx) {
             for (label, slug) in SIDEBAR_FAVORITES {
                 let path = fav_path(slug);
@@ -12551,6 +12712,7 @@ impl Rednif {
 
         // --- Locations (iCloud & cloud drives, home, volumes, AirDrop, Network, Trash) ---
         let (cloud, volumes) = sidebar_locations();
+        marks.push(("Locations", items.len()));
         if self.begin_section(&mut items, "Locations", collapsed, cx) {
             for (label, path) in cloud {
                 push_nav(&mut items, cx, &mut key, label, "svg:cloud".to_string(), path, current, collapsed);
@@ -12578,7 +12740,7 @@ impl Rednif {
                     .id(("loc-action", key))
                     .flex()
                     .items_center()
-                    .rounded_md()
+                    .rounded_lg()
                     .cursor_pointer()
                     .text_color(rgb(theme().text_muted))
                     .hover(|s| s.bg(rgb(theme().hover)).text_color(rgb(theme().text)));
@@ -12626,7 +12788,7 @@ impl Rednif {
                     .id(("sftp", key))
                     .flex()
                     .items_center()
-                    .rounded_md()
+                    .rounded_lg()
                     .cursor_pointer()
                     .text_color(rgb(theme().text_muted))
                     .hover(|s| s.bg(rgb(theme().hover)).text_color(rgb(theme().text)));
@@ -12665,7 +12827,7 @@ impl Rednif {
                 .id("connect-server")
                 .flex()
                 .items_center()
-                .rounded_md()
+                .rounded_lg()
                 .cursor_pointer()
                 .text_color(rgb(theme().text_muted))
                 .hover(|s| s.bg(rgb(theme().hover)).text_color(rgb(theme().text)));
@@ -12689,6 +12851,7 @@ impl Rednif {
         }
 
         // --- Bookmarks (with a "+" to pin the current folder) ---
+        marks.push(("Bookmarks", items.len()));
         let show_bookmarks = if collapsed {
             push_divider(&mut items);
             items.push(
@@ -12699,7 +12862,7 @@ impl Rednif {
                     .justify_center()
                     .mx_1()
                     .py_1()
-                    .rounded_md()
+                    .rounded_lg()
                     .cursor_pointer()
                     .text_color(rgb(theme().text_dim))
                     .hover(|s| s.bg(rgb(theme().hover)).text_color(rgb(theme().text)))
@@ -12720,7 +12883,7 @@ impl Rednif {
                 .flex()
                 .items_center()
                 .justify_center()
-                .rounded_md()
+                .rounded_lg()
                 .hover(|s| s.bg(rgb(theme().hover)))
                 .child(line_icon("plus", 13.0, theme().text_dim))
                 .tooltip(tip("Pin current folder"))
@@ -12812,6 +12975,7 @@ impl Rednif {
         }
 
         // --- Recents (count is user-configurable; 0 hides the section) ---
+        marks.push(("Recents", items.len()));
         let recent_limit = prefs().recent_limit;
         if recent_limit > 0 && self.begin_section(&mut items, "Recents", collapsed, cx) {
             if self.recents.is_empty() {
@@ -12839,8 +13003,15 @@ impl Rednif {
             self.render_waterfall(&mut items, &mut key, current, cx);
         }
 
+        marks.push(("", items.len()));
+        if !collapsed {
+            if let Some((title, epoch)) = self.section_anim.clone() {
+                items = ease_in_section(items, &marks, &title, epoch);
+            }
+        }
+
         let groups_on = prefs().groups_enabled;
-        div()
+        let sidebar = div()
             .id("sidebar")
             .flex_none()
             .w(px(if collapsed { SIDEBAR_COLLAPSED_W } else { SIDEBAR_W }))
@@ -12850,8 +13021,6 @@ impl Rednif {
             .flex_col()
             .pb_3()
             .bg(rgb(theme().sidebar))
-            .border_r_1()
-            .border_color(rgb(theme().border))
             // Right-click empty sidebar space → "New Group" (when enabled).
             .when(groups_on, |d| {
                 d.on_mouse_down(
@@ -12866,6 +13035,25 @@ impl Rednif {
                 )
             })
             .children(items)
+            ;
+        // Ease the width when the sidebar was just collapsed or expanded.
+        match self.sidebar_anim {
+            Some(epoch) => {
+                let (from, to) = if collapsed {
+                    (SIDEBAR_W, SIDEBAR_COLLAPSED_W)
+                } else {
+                    (SIDEBAR_COLLAPSED_W, SIDEBAR_W)
+                };
+                sidebar
+                    .with_animation(
+                        ("sidebar-w", epoch as usize),
+                        Animation::new(Duration::from_millis(240)).with_easing(ease_out_quint()),
+                        move |el, t| el.w(px(from + (to - from) * t)),
+                    )
+                    .into_any_element()
+            }
+            None => sidebar.into_any_element(),
+        }
     }
 
     /// The top bar for a pane: back/forward arrows then either the clickable
@@ -13466,7 +13654,7 @@ impl Rednif {
                     .px_2()
                     .h(px(TAB_H - 6.0))
                     .max_w(px(180.0))
-                    .rounded_md()
+                    .rounded_lg()
                     .cursor_pointer()
                     .text_color(if active { rgb(t.text) } else { rgb(t.text_muted) })
                     .bg(if active { rgb(t.surface) } else { rgba(0x00000000) })
@@ -13549,7 +13737,7 @@ impl Rednif {
                     .flex()
                     .items_center()
                     .justify_center()
-                    .rounded_md()
+                    .rounded_lg()
                     .cursor_pointer()
                     .text_color(rgb(t.text_muted))
                     .hover(|s| s.bg(rgb(t.hover)).text_color(rgb(t.text)))
@@ -13882,7 +14070,14 @@ impl Rednif {
                             };
                             let icon = cloud_badged_icon(icon_element(&target, is_dir), cloud, 11.0);
 
-                            items.push(
+                            // Rows of a just-expanded folder ease in (fade + slide
+                            // down), staggered so the list unfolds top to bottom.
+                            let ease_in = tab.expand_anim.as_ref().and_then(|(rel, epoch)| {
+                                let parent = tab.entries.iter().position(|e| e.name == *rel)?;
+                                name.starts_with(&format!("{rel}/"))
+                                    .then(|| (*epoch, entry_ix.saturating_sub(parent + 1)))
+                            });
+                            let row_el: AnyElement =
                                 file_row(
                                     &name,
                                     is_dir,
@@ -13957,8 +14152,26 @@ impl Rednif {
                                         }
                                     }),
                                 )
-                                .into_any_element(),
-                            );
+                                .into_any_element();
+                            items.push(match ease_in {
+                                Some((epoch, k)) => {
+                                    let delay = (k.min(10) as f32) * 0.04;
+                                    div()
+                                        .relative()
+                                        .child(row_el)
+                                        .with_animation(
+                                            ("row-in", epoch as usize * 100_000 + row_key),
+                                            Animation::new(Duration::from_millis(320))
+                                                .with_easing(ease_out_quint()),
+                                            move |el, t| {
+                                                let t = ((t - delay) / (1.0 - delay)).clamp(0.0, 1.0);
+                                                el.opacity(t).top(px(-10.0 * (1.0 - t)))
+                                            },
+                                        )
+                                        .into_any_element()
+                                }
+                                None => row_el,
+                            });
                         }
                         items
                     }),
@@ -14164,7 +14377,7 @@ impl Rednif {
                     .items_center()
                     .gap_1()
                     .p_1()
-                    .rounded_md()
+                    .rounded_lg()
                     .cursor_pointer()
                     .when(selected, |s| s.bg(rgb(t.selected)))
                     .hover(|s| s.bg(rgb(t.hover)))
@@ -14207,7 +14420,7 @@ impl Rednif {
                             .max_w(px(600.0))
                             .max_h(px(600.0))
                             .p_2()
-                            .rounded_md()
+                            .rounded_lg()
                             .bg(rgb(0xffffff))
                             .child(preview),
                     ),
@@ -14419,12 +14632,29 @@ impl Render for Rednif {
         // Kick off any pending waterfall folder reads before rendering the tree.
         self.ensure_waterfall_loaded(cx);
         // Main row: sidebar | content (canvas) | optional inspector.
+        // The window frame is the sidebar color; the file area floats on it as a
+        // rounded card.
         let mut main_row = div()
             .flex()
             .flex_1()
             .min_h_0()
+            .gap_2()
+            .pr_2()
+            .pb_2()
             .child(self.render_sidebar(cx))
-            .child(self.render_content(cx));
+            .child(
+                div()
+                    .flex_1()
+                    .min_w_0()
+                    .h_full()
+                    .flex()
+                    .rounded_2xl()
+                    .overflow_hidden()
+                    .bg(rgb(t.bg))
+                    .border_1()
+                    .border_color(rgb(t.border))
+                    .child(self.render_content(cx)),
+            );
         if let Some(inspector) = self.render_inspector(cx) {
             main_row = main_row.child(inspector);
         }
@@ -14434,7 +14664,7 @@ impl Render for Rednif {
             .flex()
             .flex_col()
             .size_full()
-            .bg(rgb(t.bg))
+            .bg(rgb(t.sidebar))
             .text_color(rgb(t.text))
             .text_sm()
             // Focusable so it receives key events (Cmd+P, palette typing).
@@ -14542,7 +14772,7 @@ impl Render for Rednif {
                     .flex_none()
                     .w_full()
                     .h(px(TITLEBAR_H))
-                    .bg(rgb(t.bg))
+                    .bg(rgb(t.sidebar))
                     // This strip covers the native titlebar, so the OS never
                     // sees the double-click; forward it (zoom / minimize per
                     // the user's System Settings).
@@ -14577,7 +14807,7 @@ impl Render for Rednif {
                             .id("sftp-err-dismiss")
                             .flex_none()
                             .px_2()
-                            .rounded_md()
+                            .rounded_lg()
                             .cursor_pointer()
                             .hover(|s| s.bg(rgba(0xffffff33)))
                             .child("✕")
@@ -14790,6 +15020,44 @@ fn push_group_member(
     items.push(item.into_any_element());
 }
 
+/// Wrap the rows of the just-expanded sidebar section so they ease in (fade and
+/// slide down, staggered). `marks` holds each section's header index; the entry
+/// after it bounds the section's rows.
+fn ease_in_section(
+    items: Vec<AnyElement>,
+    marks: &[(&'static str, usize)],
+    title: &str,
+    epoch: u64,
+) -> Vec<AnyElement> {
+    let Some(mi) = marks.iter().position(|(t, _)| *t == title) else {
+        return items;
+    };
+    let (start, end) = (marks[mi].1 + 1, marks.get(mi + 1).map_or(items.len(), |m| m.1));
+    items
+        .into_iter()
+        .enumerate()
+        .map(|(i, el)| {
+            if i < start || i >= end {
+                return el;
+            }
+            let k = i - start;
+            let delay = (k.min(10) as f32) * 0.045;
+            div()
+                .relative()
+                .child(el)
+                .with_animation(
+                    ("sec-in", epoch as usize * 1_000 + i),
+                    Animation::new(Duration::from_millis(320)).with_easing(ease_out_quint()),
+                    move |el, t| {
+                        let t = ((t - delay) / (1.0 - delay)).clamp(0.0, 1.0);
+                        el.opacity(t).top(px(-8.0 * (1.0 - t)))
+                    },
+                )
+                .into_any_element()
+        })
+        .collect()
+}
+
 /// A 1px separator used between sections in the collapsed rail.
 fn push_divider(items: &mut Vec<AnyElement>) {
     items.push(
@@ -14863,7 +15131,7 @@ fn breadcrumb_seg(
         .h(px(22.0))
         .flex()
         .items_center()
-        .rounded_md()
+        .rounded_lg()
         .cursor_pointer()
         .when(is_current, |d| d.font_weight(FontWeight::SEMIBOLD))
         .text_color(if active { rgb(t.text) } else { rgb(t.text_dim) })
@@ -15117,7 +15385,7 @@ fn ctx_item(
         .mx_1()
         .px_3()
         .py_1()
-        .rounded_md()
+        .rounded_lg()
         .cursor_pointer()
         .text_color(rgb(menu_style().text))
         .hover(|s| s.bg(rgb(theme().selected)))
@@ -16095,6 +16363,7 @@ fn file_row(
         .id(("row", key))
         .flex()
         .items_center()
+        .rounded_lg()
         .px_3()
         .h(px(ROW_H))
         .cursor_pointer()
@@ -16232,7 +16501,7 @@ fn icon_cell(
         .items_center()
         .gap_1()
         .p_2()
-        .rounded_md()
+        .rounded_lg()
         .cursor_pointer()
         .when(selected, |s| s.bg(rgb(t.selected)))
         .when(ctx_active && !selected, |s| s.bg(rgb(t.hover)))
@@ -16678,7 +16947,7 @@ fn fps_overlay() -> AnyElement {
         .right(px(12.0))
         .px_2()
         .py_1()
-        .rounded_md()
+        .rounded_lg()
         .bg(rgba(0x000000aa))
         .text_xs()
         .text_color(color)
@@ -17813,6 +18082,11 @@ fn icon_svg_body(name: &str) -> Option<&'static str> {
         "trash" => r#"<path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/>"#,
         "server" => r#"<rect width="20" height="8" x="2" y="2" rx="2"/><rect width="20" height="8" x="2" y="14" rx="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/>"#,
         "link" => r#"<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>"#,
+        "minus" => r#"<path d="M5 12h14"/>"#,
+        "check" => r#"<path d="M20 6 9 17l-5-5"/>"#,
+        "settings" => r#"<path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/>"#,
+        "keyboard" => r#"<rect width="20" height="16" x="2" y="4" rx="2"/><path d="M6 8h.01"/><path d="M10 8h.01"/><path d="M14 8h.01"/><path d="M18 8h.01"/><path d="M8 12h.01"/><path d="M12 12h.01"/><path d="M16 12h.01"/><path d="M7 16h10"/>"#,
+        "palette" => r#"<circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>"#,
         "plus" => r#"<path d="M5 12h14"/><path d="M12 5v14"/>"#,
         "chevron-left" => r#"<path d="m15 18-6-6 6-6"/>"#,
         "search" => r#"<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>"#,
@@ -19440,9 +19714,9 @@ fn write_config_string(name: &str, value: &str) {
 // --- Update check (GitHub "latest release" → dismissible banner) ---
 
 /// The GitHub repo whose latest release drives the update banner.
-const GITHUB_REPO: &str = "WizenPainter/shuffle";
+const GITHUB_REPO: &str = "EternityGH/rednif";
 /// The stable "always the newest DMG" download link (same one the website uses).
-const DMG_URL: &str = "https://github.com/WizenPainter/shuffle/releases/latest/download/Rednif.dmg";
+const DMG_URL: &str = "https://github.com/EternityGH/rednif/releases/latest/download/Rednif.dmg";
 
 /// Parse a version like "v0.2.3" / "0.2.3" into numeric components for
 /// comparison. `Vec<u32>` compares lexicographically, so [0,2,4] > [0,2,3].

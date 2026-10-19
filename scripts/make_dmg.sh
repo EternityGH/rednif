@@ -8,7 +8,7 @@
 #
 # For a SEAMLESS install (no Gatekeeper warning) the app is signed with a
 # Developer ID certificate and notarized by Apple. The identity + notary profile
-# default to Jaime Guzman's below; override with env vars if they change.
+# are read from the environment (REDNIF_DEVID, REDNIF_NOTARY_PROFILE).
 #
 # One-time notary profile setup (do this ONCE before the first notarized build):
 #   xcrun notarytool store-credentials rednif-notary \
@@ -30,7 +30,7 @@ VERSION=$(grep -m1 '^version' Cargo.toml | sed -E 's/.*"([^"]+)".*/\1/')
 DMG="Rednif-${VERSION}.dmg"
 
 # Signing identity + notary profile (override via env; set REDNIF_DEVID="" to skip).
-: "${REDNIF_DEVID=Developer ID Application: Jaime Guzman (Z69U4AQSH3)}"
+: "${REDNIF_DEVID=}"
 : "${REDNIF_NOTARY_PROFILE=rednif-notary}"
 
 if [ ! -d "$APP" ]; then

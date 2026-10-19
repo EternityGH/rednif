@@ -94,12 +94,13 @@ PLIST
 # bundle). A stable signing identity + fixed bundle id is what lets macOS
 # remember granted folder/privacy permissions across launches and rebuilds,
 # instead of re-prompting every run (which ad-hoc signing causes).
-SIGN_ID="${REDNIF_SIGN_ID:-Apple Development: Jaime Guzman (7UB4C2P6D6)}"
-if security find-identity -v -p codesigning 2>/dev/null | grep -q "$SIGN_ID"; then
+# Set REDNIF_SIGN_ID to a certificate name from `security find-identity -v -p codesigning`.
+SIGN_ID="${REDNIF_SIGN_ID:-}"
+if [ -n "$SIGN_ID" ] && security find-identity -v -p codesigning 2>/dev/null | grep -qF "$SIGN_ID"; then
     SIGN_WITH="$SIGN_ID"
     echo "Signed with: $SIGN_ID"
 else
-    echo "WARNING: signing identity not found; falling back to ad-hoc (permissions will re-prompt)."
+    echo "NOTE: no signing identity (set REDNIF_SIGN_ID); using an ad-hoc signature, so macOS will re-prompt for folder permissions after each rebuild."
     SIGN_WITH="-"
 fi
 # Sign nested helper executables BEFORE the app. Extra Mach-Os in Contents/MacOS

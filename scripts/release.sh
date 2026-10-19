@@ -13,7 +13,7 @@
 # BOTH a versioned name (Rednif-<version>.dmg) and a STABLE name (Rednif.dmg).
 #
 # The stable name is what makes the website link never change:
-#   https://github.com/WizenPainter/shuffle/releases/latest/download/Rednif.dmg
+#   https://github.com/EternityGH/rednif/releases/latest/download/Rednif.dmg
 #
 # Prerequisites (one-time): notarytool profile stored (see make_dmg.sh), and
 # `gh auth login` done. BEFORE running: bump `version` in Cargo.toml, then
@@ -22,7 +22,7 @@
 set -e
 cd "$(dirname "$0")/.."
 
-REPO="WizenPainter/shuffle"
+REPO="EternityGH/rednif"
 VERSION=$(grep -m1 '^version' Cargo.toml | sed -E 's/.*"([^"]+)".*/\1/')
 TAG="v$VERSION"
 DMG="Rednif-$VERSION.dmg"

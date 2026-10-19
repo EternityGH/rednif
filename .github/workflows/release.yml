@@ -5,7 +5,7 @@ name: Release
 # attestation cryptographically ties the exact DMG bytes to this commit and this
 # workflow run, so anyone can verify a download was built from this source:
 #
-#   gh attestation verify Rednif.dmg -R WizenPainter/shuffle
+#   gh attestation verify Rednif.dmg -R EternityGH/rednif
 #
 # To cut a release: bump `version` in Cargo.toml, commit + push, then push a tag:
 #   git tag v0.3.3 && git push origin v0.3.3
@@ -15,7 +15,7 @@ name: Release
 #                           as a .p12 and base64-encoded:
 #                             base64 -i DeveloperID.p12 | pbcopy
 #   MACOS_CERT_PASSWORD     the password you set when exporting that .p12
-#   MACOS_SIGN_IDENTITY     e.g. "Developer ID Application: Jaime Guzman (Z69U4AQSH3)"
+#   MACOS_SIGN_IDENTITY     e.g. "Developer ID Application: Your Name (TEAMID)"
 #
 #   Notarization — provide EITHER an App Store Connect API key (recommended):
 #     AC_API_KEY_ID         the key's Key ID
@@ -124,7 +124,7 @@ jobs:
 
       # This is the crux: GitHub attests that THIS workflow run (tied to this
       # commit) produced these exact DMG bytes. Verifiable with:
-      #   gh attestation verify Rednif.dmg -R WizenPainter/shuffle
+      #   gh attestation verify Rednif.dmg -R EternityGH/rednif
       - name: Attest build provenance
         uses: actions/attest-build-provenance@v2
         with:
